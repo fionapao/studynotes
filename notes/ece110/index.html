@@ -40,58 +40,13 @@
         <div class="sidebar-title">Contents</div>
         <nav class="sidebar-nav">
           <a href="#thevenin" class="active">Thévenin / Norton</a>
-          <a href="#mosfets">MOSFETs</a>
           <a href="#nodal">Nodal Analysis</a>
-          <a href="#oscillators">Oscillators</a>
         </nav>
       </aside>
 
       <!-- Main content -->
-      <article class="notes-content">
-
-        <h2 id="thevenin">Thévenin & Norton Equivalents</h2>
-        <h3>Key Idea</h3>
-        <p>
-          Any linear circuit with sources and resistors can be reduced to a single
-          voltage source <code>V_th</code> in series with a resistor <code>R_th</code>
-          (Thévenin), or a current source <code>I_N</code> in parallel with <code>R_N</code>
-          (Norton).
-        </p>
-        <h3>Steps</h3>
-        <ul>
-          <li>Remove the load. Find <code>V_oc</code> (open-circuit voltage) → this is <code>V_th</code>.</li>
-          <li>Kill all independent sources (voltage → short, current → open). Find <code>R_eq</code> from terminals → <code>R_th</code>.</li>
-          <li>Norton: <code>I_N = V_th / R_th</code>.</li>
-        </ul>
-
-        <h2 id="mosfets">MOSFETs</h2>
-        <h3>nMOS Operating Regions</h3>
-        <p>
-          Three regions based on <code>V_GS</code> and <code>V_DS</code>:
-        </p>
-        <ul>
-          <li><strong>Cutoff</strong>: <code>V_GS &lt; V_tn</code> — device is off, <code>I_D = 0</code>.</li>
-          <li><strong>Triode/Linear</strong>: <code>V_DS &lt; V_GS − V_tn</code> — acts like a resistor.</li>
-          <li><strong>Saturation</strong>: <code>V_DS ≥ V_GS − V_tn</code> — current source behavior.</li>
-        </ul>
-        <pre><code>I_D (sat) = (k_n / 2)(V_GS - V_tn)²</code></pre>
-
-        <h2 id="nodal">Nodal Analysis</h2>
-        <h3>KCL at each node</h3>
-        <p>
-          Assign a reference node (ground). Write KCL at each unknown node:
-          sum of currents leaving = 0. Express all currents in terms of node voltages.
-        </p>
-
-        <h2 id="oscillators">Damped Oscillators</h2>
-        <h3>Second-order RLC</h3>
-        <p>Series RLC circuit satisfies:</p>
-        <pre><code>L·(d²i/dt²) + R·(di/dt) + (1/C)·i = 0</code></pre>
-        <p>
-          Damping ratio <code>ζ = R/(2)·√(C/L)</code>. 
-          Under-damped when <code>ζ &lt; 1</code> → oscillatory response.
-        </p>
-
+      <article class="notes-content" id="md-content">
+        <p style="color: var(--text-dim)">Loading...</p>
       </article>
     </div>
   </main>
@@ -103,6 +58,62 @@
     </div>
   </footer>
 
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+      },
+      startup: { typeset: false }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <!-- Your script (keep this) -->
   <script src="../../js/script.js"></script>
+
+  <!-- Markdown loader -->
+  <script>
+    const files = [
+      '../../notes/ece110/thevenin.md',
+      '../../notes/ece110/nodal.md',
+      // '../../notes/ece110/mosfets.md', // Uncomment/add more as needed
+    ];
+
+    // Map file names to section ids
+    const fileToId = {
+      '../../notes/ece110/thevenin.md': 'thevenin',
+      '../../notes/ece110/nodal.md': 'nodal',
+      // '../../notes/ece110/mosfets.md': 'mosfets',
+    };
+
+    async function loadNotes() {
+      const container = document.getElementById('md-content');
+      container.innerHTML = '';
+
+      for (const file of files) {
+        const res = await fetch(file);
+        if (!res.ok) continue;
+        const text = await res.text();
+
+        const section = document.createElement('div');
+        section.classList.add('md-section');
+        // Assign id based on file name
+        const sectionId = fileToId[file] || '';
+        if (sectionId) section.id = sectionId;
+        section.innerHTML = marked.parse(text);
+        container.appendChild(section);
+      }
+
+      // Trigger MathJax to render LaTeX after markdown is inserted
+      MathJax.typesetPromise([container]);
+    }
+
+    loadNotes();
+  </script>
 </body>
 </html>

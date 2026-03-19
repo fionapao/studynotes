@@ -26,27 +26,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ── Highlight active sidebar link on scroll ── */
-  const headings = document.querySelectorAll('.notes-content h2[id]');
+  const sectionDivs = document.querySelectorAll('.notes-content .md-section[id]');
   const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
 
-  if (headings.length && sidebarLinks.length) {
-    const headingObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            sidebarLinks.forEach(link => {
-              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-            });
-          }
+  if (sectionDivs.length && sidebarLinks.length) {
+    // Helper: find the section closest to the top
+    function highlightCurrentSection() {
+      let currentId = null;
+      let minDistance = Infinity;
+      sectionDivs.forEach(div => {
+        const rect = div.getBoundingClientRect();
+        // Section is considered current if its top is above the middle of the viewport but not too far above
+        const distance = Math.abs(rect.top - window.innerHeight * 0.18);
+        if (rect.top < window.innerHeight * 0.5 && distance < minDistance) {
+          minDistance = distance;
+          currentId = div.id;
+        }
+      });
+      if (currentId) {
+        sidebarLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
         });
-      },
-      { rootMargin: '-20% 0px -70% 0px' }
-    );
-    headings.forEach(h => headingObserver.observe(h));
+      }
+    }
+    window.addEventListener('scroll', highlightCurrentSection, { passive: true });
+    // Initial highlight
+    highlightCurrentSection();
   }
 
-  /* ── Smooth-scroll for sidebar links ── */
+  /* ── Smooth-scroll for sidebar links & immediate active state ── */
   sidebarLinks.forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
@@ -56,6 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        // Immediately mark clicked link as active
+        sidebarLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
       }
     });
   });

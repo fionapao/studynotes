@@ -408,6 +408,17 @@ ul { list-style: none; }
   color: var(--muted);
 }
 
+/* Markdown rendered content */
+.md-section { margin-bottom: var(--space-lg); }
+.md-section h2 { /* already styled via .notes-content h2 */ }
+.md-section p  { color: var(--text-dim); max-width: 65ch; line-height: 1.9; }
+.md-section ul, .md-section ol { list-style: none; padding: 0; }
+.md-section li { position: relative; padding-left: 1.2rem; color: var(--text-dim); margin-bottom: 4px; }
+.md-section li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+.md-section pre { background: #141414; border: 1px solid var(--border); padding: var(--space-md); border-radius: var(--radius); overflow-x: auto; margin: var(--space-sm) 0; }
+.md-section code { background: #1e1e1e; border: 1px solid var(--border); padding: 2px 6px; border-radius: 3px; font-size: 12px; color: var(--accent); }
+.md-section pre code { background: none; border: none; padding: 0; color: var(--text); }
+
 /* ─────────────────────────────────────────
    ABOUT & CONTACT PAGES
 ───────────────────────────────────────── */
