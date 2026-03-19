@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Notes</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="nav-logo">Notes<span class="accent">.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Study Archive</div>
+      <h1 class="hero-title">A structured<br /><em>knowledge base</em><br />for every class.</h1>
+      <p class="hero-sub">Browse notes organized by course. Clean, searchable, always there when you need them.</p>
+    </section>
+
+    <section class="courses" id="courses">
+      <div class="section-header">
+        <span class="section-label">Courses</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="course-grid">
+
+        <a href="notes/ece110/index.html" class="course-card">
+          <div class="course-code">ECE 110</div>
+          <div class="course-name">Introduction to Electronics</div>
+          <div class="course-meta">
+            <span class="tag">Circuits</span>
+            <span class="tag">MOSFETs</span>
+          </div>
+          <div class="course-arrow">→</div>
+        </a>
+
+        <a href="notes/cs225/index.html" class="course-card">
+          <div class="course-code">CS 225</div>
+          <div class="course-name">Data Structures</div>
+          <div class="course-meta">
+            <span class="tag">C++</span>
+            <span class="tag">Algorithms</span>
+          </div>
+          <div class="course-arrow">→</div>
+        </a>
+
+        <a href="notes/math285/index.html" class="course-card">
+          <div class="course-code">MATH 285</div>
+          <div class="course-name">Differential Equations</div>
+          <div class="course-meta">
+            <span class="tag">ODE</span>
+            <span class="tag">Laplace</span>
+          </div>
+          <div class="course-arrow">→</div>
+        </a>
+
+        <a href="notes/cs233/index.html" class="course-card">
+          <div class="course-code">CS 233</div>
+          <div class="course-name">Computer Architecture</div>
+          <div class="course-meta">
+            <span class="tag">LC-3</span>
+            <span class="tag">Assembly</span>
+          </div>
+          <div class="course-arrow">→</div>
+        </a>
+
+        <!-- Add more cards here following the same pattern -->
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">Notes<span class="accent">.</span></span>
+      <span class="footer-copy">Built & maintained by Fi</span>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

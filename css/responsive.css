@@ -1,0 +1,74 @@
+/* ─────────────────────────────────────────
+   RESPONSIVE — mobile-first breakpoints
+───────────────────────────────────────── */
+
+/* Tablet — ≤ 768px */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 4rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Notes layout: collapse sidebar above content */
+  .notes-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .notes-sidebar {
+    position: static;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sidebar-nav a {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 4px 8px;
+  }
+
+  .sidebar-nav a.active {
+    border-left: none;
+    border-bottom-color: var(--accent);
+  }
+}
+
+/* Mobile — ≤ 480px */
+@media (max-width: 480px) {
+  :root {
+    --space-md: 1.25rem;
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+  }
+
+  .nav {
+    padding: 0 1rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .course-card {
+    padding: 1.25rem;
+  }
+}

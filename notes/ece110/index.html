@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECE 110 — Study Notes</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/responsive.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="../../index.html" class="nav-logo">Notes<span class="accent">.</span></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../../about.html">About</a></li>
+        <li><a href="../../contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="notes-hero">
+      <a href="../../index.html" class="back-link">← All Courses</a>
+      <div class="hero-label">ECE 110</div>
+      <h1 class="hero-title" style="font-family: var(--ff-display); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400;">
+        Introduction to Electronics
+      </h1>
+    </section>
+
+    <div class="notes-layout">
+
+      <!-- Sidebar -->
+      <aside class="notes-sidebar">
+        <div class="sidebar-title">Contents</div>
+        <nav class="sidebar-nav">
+          <a href="#thevenin" class="active">Thévenin / Norton</a>
+          <a href="#mosfets">MOSFETs</a>
+          <a href="#nodal">Nodal Analysis</a>
+          <a href="#oscillators">Oscillators</a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <article class="notes-content">
+
+        <h2 id="thevenin">Thévenin & Norton Equivalents</h2>
+        <h3>Key Idea</h3>
+        <p>
+          Any linear circuit with sources and resistors can be reduced to a single
+          voltage source <code>V_th</code> in series with a resistor <code>R_th</code>
+          (Thévenin), or a current source <code>I_N</code> in parallel with <code>R_N</code>
+          (Norton).
+        </p>
+        <h3>Steps</h3>
+        <ul>
+          <li>Remove the load. Find <code>V_oc</code> (open-circuit voltage) → this is <code>V_th</code>.</li>
+          <li>Kill all independent sources (voltage → short, current → open). Find <code>R_eq</code> from terminals → <code>R_th</code>.</li>
+          <li>Norton: <code>I_N = V_th / R_th</code>.</li>
+        </ul>
+
+        <h2 id="mosfets">MOSFETs</h2>
+        <h3>nMOS Operating Regions</h3>
+        <p>
+          Three regions based on <code>V_GS</code> and <code>V_DS</code>:
+        </p>
+        <ul>
+          <li><strong>Cutoff</strong>: <code>V_GS &lt; V_tn</code> — device is off, <code>I_D = 0</code>.</li>
+          <li><strong>Triode/Linear</strong>: <code>V_DS &lt; V_GS − V_tn</code> — acts like a resistor.</li>
+          <li><strong>Saturation</strong>: <code>V_DS ≥ V_GS − V_tn</code> — current source behavior.</li>
+        </ul>
+        <pre><code>I_D (sat) = (k_n / 2)(V_GS - V_tn)²</code></pre>
+
+        <h2 id="nodal">Nodal Analysis</h2>
+        <h3>KCL at each node</h3>
+        <p>
+          Assign a reference node (ground). Write KCL at each unknown node:
+          sum of currents leaving = 0. Express all currents in terms of node voltages.
+        </p>
+
+        <h2 id="oscillators">Damped Oscillators</h2>
+        <h3>Second-order RLC</h3>
+        <p>Series RLC circuit satisfies:</p>
+        <pre><code>L·(d²i/dt²) + R·(di/dt) + (1/C)·i = 0</code></pre>
+        <p>
+          Damping ratio <code>ζ = R/(2)·√(C/L)</code>. 
+          Under-damped when <code>ζ &lt; 1</code> → oscillatory response.
+        </p>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">Notes<span class="accent">.</span></span>
+      <span class="footer-copy">Built & maintained by Fi</span>
+    </div>
+  </footer>
+
+  <script src="../../js/script.js"></script>
+</body>
+</html>
