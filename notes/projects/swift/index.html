@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swift Project — Study Notes</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
+  <link rel="stylesheet" href="../../../css/responsive.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="../../../index.html" class="nav-logo">Notes<span class="accent">.</span></a>
+      <ul class="nav-links">
+        <li><a href="../../../index.html">Home</a></li>
+        <li><a href="../../../about.html">About</a></li>
+        <li><a href="../../../contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="notes-hero">
+      <a href="../../../index.html" class="back-link">← All Notes</a>
+      <div class="hero-label">Project Notes</div>
+      <h1 class="hero-title" style="font-family: var(--ff-display); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400;">
+        Swift
+      </h1>
+    </section>
+
+    <div class="notes-layout">
+
+      <!-- Sidebar -->
+      <aside class="notes-sidebar">
+        <div class="sidebar-title">Contents</div>
+        <nav class="sidebar-nav">
+          <a href="#swift-basics" class="active">Swift Basics</a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <article class="notes-content" id="md-content">
+        <p style="color: var(--text-dim)">Loading...</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">Notes<span class="accent">.</span></span>
+      <span class="footer-copy">Built & maintained by FP</span>
+    </div>
+  </footer>
+
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: true,
+      smartLists: true,
+      smartypants: true,
+    });
+  </script>
+
+  <!-- LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+      },
+      startup: { typeset: false }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <!-- Your script (keep this) -->
+  <script src="../../../js/script.js"></script>
+
+  <!-- Markdown loader -->
+  <script>
+    const files = [
+      '../../../notes/projects/swift/swift-basics.md',
+    ];
+
+    // Map file names to section ids
+    const fileToId = {
+      '../../../notes/projects/swift/swift-basics.md': 'swift-basics',
+    };
+
+    async function loadNotes() {
+      const container = document.getElementById('md-content');
+      container.innerHTML = '';
+
+      for (const file of files) {
+        const res = await fetch(file);
+        if (!res.ok) continue;
+        const text = await res.text();
+
+        const section = document.createElement('div');
+        section.classList.add('md-section');
+        const sectionId = fileToId[file] || '';
+        if (sectionId) section.id = sectionId;
+        section.innerHTML = marked.parse(text);
+        container.appendChild(section);
+      }
+
+      MathJax.typesetPromise([container]);
+    }
+
+    loadNotes();
+  </script>
+</body>
+</html>

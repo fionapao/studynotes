@@ -41,10 +41,10 @@ $$y = C_1 e^{at}\cos(bt) + C_2 e^{at}\sin(bt)$$
 
 If $r_i$ is a repeated root of the characteristic equation of multiplicity $k$, then the differential euqation has $k$ linearly independent solution given by
 
-$$y_1(t) = e^{r_it}$$
-$$y_2(t) = te^{r_it}$$
-$$y_3(t) = t^2e^{r_it}$$
-$$y_k(t) = t^{k-1}e^{r_it}$$
+$y_1(t) = e^{r_it}$
+$y_2(t) = te^{r_it}$
+$y_3(t) = t^2e^{r_it}$
+$y_k(t) = t^{k-1}e^{r_it}$
 
 ## Undetermined Coefficients
 
