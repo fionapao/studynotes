@@ -7,7 +7,7 @@
   --border:    #272727;
   --muted:     #555555;
   --text:      #d4cfc9;
-  --text-dim:  #888880;
+  --text-dim:  #b0b0a0;
   --accent:    #c8a96e;       /* warm gold – single accent */
   --accent-dim:#7a6540;
 
@@ -32,7 +32,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--ff-mono);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
@@ -329,6 +329,15 @@ ul { list-style: none; }
 .sidebar-nav a:hover { color: var(--text); border-color: var(--border); }
 .sidebar-nav a.active { color: var(--accent); border-color: var(--accent); }
 
+.sidebar-nav a.h2-link {
+  font-size: 12px;
+  padding-left: 20px;
+  color: var(--muted);
+  border-left: none;
+}
+.sidebar-nav a.h2-link:hover { color: var(--text-dim); }
+.sidebar-nav a.h2-link.active { color: var(--accent); }
+
 .notes-content h1 {
   font-family: var(--ff-display);
   font-size: 2.2rem;
@@ -338,13 +347,14 @@ ul { list-style: none; }
 }
 
 .notes-content h2 {
-  font-family: var(--ff-display);
-  font-size: 1.4rem;
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
   font-weight: 400;
   color: var(--text);
-  margin: var(--space-lg) 0 var(--space-sm);
-  padding-bottom: var(--space-xs);
+  margin: 1.75rem 0 0.7rem;
+  padding-bottom: 0.2rem;
   border-bottom: 1px solid var(--border);
+  scroll-margin-top: 100px; /* Add scroll margin for sticky header */
 }
 
 .notes-content h3 {
@@ -358,8 +368,8 @@ ul { list-style: none; }
 .notes-content p {
   color: var(--text-dim);
   margin-bottom: var(--space-sm);
-  max-width: 65ch;
-  line-height: 1.9;
+  max-width: 70ch;
+  line-height: 2.0;
 }
 
 .notes-content blockquote {
@@ -461,12 +471,11 @@ ul { list-style: none; }
 }
 
 /* Markdown rendered content */
-.md-section { margin-bottom: var(--space-lg); }
-.md-section h2 { /* already styled via .notes-content h2 */ }
-.md-section p  { color: var(--text-dim); max-width: 65ch; line-height: 1.9; }
-.md-section ul {
-  list-style: none;
-  padding: 0;
+.md-section {
+  margin-bottom: var(--space-lg);
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--text);
+  scroll-margin-top: 100px; /* Add scroll margin for sticky header */
 }
 .md-section ol {
   counter-reset: markdown-ol;

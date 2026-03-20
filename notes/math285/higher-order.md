@@ -91,6 +91,8 @@ To find the general solution to the differential equation:
 
 ## The Annihilator Method
 
+can be solved with undetermined coefficients
+
 ## Variation of Parameters
 
 - **General** way to find $y_{part}$
@@ -113,3 +115,27 @@ This will solve any non-hemogeneous linear equation provided we can solve the ho
 
 ## Laplace Transform
 
+### Definition
+
+If $f(t)$ is a function defined on $[0, \infty)$ that grows at most exponentially fast, then the Laplace transform of $f$ is defined to be
+
+$$
+F(s) = \mathcal{L}(f)= \int_{0}^{\infty} e^{-st}f(t)dt
+$$
+
+- Laplace transform is invertible
+- Laplace transform is linear
+
+### Lemma
+
+The Laplace transform of $f'(t)$ satisfies
+
+$$
+\mathcal{L}(f') = s\mathcal{L}-f(0)
+$$
+
+### Method
+
+1. Take laplace transform on both sides. Write $\mathcal{L}y = Y(s)$. Apply until obtain an equation in terms of $s$ and $Y(s)$ only.
+2. Solve for $Y(s)$
+3. Use the table to go backwards and find $y$

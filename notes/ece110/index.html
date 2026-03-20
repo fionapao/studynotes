@@ -93,7 +93,9 @@
 
     async function loadNotes() {
       const container = document.getElementById('md-content');
+      const sidebarNav = document.querySelector('.sidebar-nav');
       container.innerHTML = '';
+      sidebarNav.innerHTML = ''; // Clear existing links
 
       for (const file of files) {
         const res = await fetch(file);
@@ -107,10 +109,49 @@
         if (sectionId) section.id = sectionId;
         section.innerHTML = marked.parse(text);
         container.appendChild(section);
+
+        // Add H1 link to sidebar
+        const h1Element = section.querySelector('h1');
+        if (h1Element) {
+          const h1Link = document.createElement('a');
+          h1Link.href = `#${sectionId}`;
+          h1Link.textContent = h1Element.textContent;
+          sidebarNav.appendChild(h1Link);
+        }
+
+        // Add H2 links to sidebar
+        const h2Elements = section.querySelectorAll('h2');
+        h2Elements.forEach((h2, index) => {
+          // Generate ID for H2 if it doesn't have one
+          if (!h2.id) {
+            const baseId = h2.textContent.toLowerCase()
+              .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+              .replace(/\s+/g, '-') // Replace spaces with hyphens
+              .replace(/-+/g, '-') // Replace multiple hyphens with single
+              .trim();
+            h2.id = `${sectionId}-${baseId}`;
+          }
+
+          const h2Link = document.createElement('a');
+          h2Link.href = `#${h2.id}`;
+          h2Link.textContent = h2.textContent;
+          h2Link.classList.add('h2-link');
+          sidebarNav.appendChild(h2Link);
+        });
+      }
+
+      // Set first link as active
+      const firstLink = sidebarNav.querySelector('a');
+      if (firstLink) {
+        firstLink.classList.add('active');
       }
 
       // Trigger MathJax to render LaTeX after markdown is inserted
-      MathJax.typesetPromise([container]);
+      MathJax.typesetPromise([container]).then(() => {
+        // Setup sidebar functionality after content is loaded
+        if (window.setupSidebarLinks) window.setupSidebarLinks();
+        if (window.setupSidebarHighlighting) window.setupSidebarHighlighting();
+      });
     }
 
     loadNotes();

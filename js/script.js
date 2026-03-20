@@ -26,49 +26,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ── Highlight active sidebar link on scroll ── */
-  const sectionDivs = document.querySelectorAll('.notes-content .md-section[id]');
-  const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+  function setupSidebarHighlighting() {
+    const sectionDivs = document.querySelectorAll('.notes-content .md-section[id]');
+    const h2Elements = document.querySelectorAll('.notes-content h2[id]');
+    const allSections = [...sectionDivs, ...h2Elements];
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
 
-  if (sectionDivs.length && sidebarLinks.length) {
-    // Helper: find the section closest to the top
-    function highlightCurrentSection() {
-      let currentId = null;
-      let minDistance = Infinity;
-      sectionDivs.forEach(div => {
-        const rect = div.getBoundingClientRect();
-        // Section is considered current if its top is above the middle of the viewport but not too far above
-        const distance = Math.abs(rect.top - window.innerHeight * 0.18);
-        if (rect.top < window.innerHeight * 0.5 && distance < minDistance) {
-          minDistance = distance;
-          currentId = div.id;
-        }
-      });
-      if (currentId) {
-        sidebarLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+    if (allSections.length && sidebarLinks.length) {
+      // Helper: find the section closest to the top
+      function highlightCurrentSection() {
+        let currentId = null;
+        let minDistance = Infinity;
+        allSections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          // Section is considered current if its top is above the middle of the viewport but not too far above
+          const distance = Math.abs(rect.top - window.innerHeight * 0.18);
+          if (rect.top < window.innerHeight * 0.5 && distance < minDistance) {
+            minDistance = distance;
+            currentId = section.id;
+          }
         });
+        if (currentId) {
+          sidebarLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+          });
+        }
       }
+      window.addEventListener('scroll', highlightCurrentSection, { passive: true });
+      // Initial highlight
+      highlightCurrentSection();
     }
-    window.addEventListener('scroll', highlightCurrentSection, { passive: true });
-    // Initial highlight
-    highlightCurrentSection();
   }
 
   /* ── Smooth-scroll for sidebar links & immediate active state ── */
-  sidebarLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function setupSidebarLinks() {
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          // Immediately mark clicked link as active
+          sidebarLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
         }
-        // Immediately mark clicked link as active
-        sidebarLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      }
+      });
     });
-  });
+  }
+
+  // Make these functions available globally so they can be called after dynamic content loads
+  window.setupSidebarHighlighting = setupSidebarHighlighting;
+  window.setupSidebarLinks = setupSidebarLinks;
 
 });
